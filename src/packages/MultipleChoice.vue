@@ -1,16 +1,12 @@
 <script setup lang="ts">
-import { ref, onMounted, reactive, onBeforeUnmount,withDefaults,StyleValue } from "vue"
+import { ref, onMounted, reactive, onBeforeUnmount,PropType,CSSProperties } from "vue"
 type Item = {
   key: string
   [index:string]:any
 }
-type PropsType = {
-  dataSource: Array<Item>
-  containerStyle:StyleValue 
-}
-const props = withDefaults(defineProps<PropsType>(),{
-  dataSource:() =>[],
-  containerStyle:() => ({})
+const props = defineProps({
+  dataSource:{type:Array<Item>,default:()=>[]},
+  containerStyle:{type: Object as PropType<CSSProperties>, default:()=>({})}
 })
 const list = ref<HTMLElement | null>(null)
 const selectItem = reactive<string[]>([])
@@ -44,7 +40,7 @@ onBeforeUnmount(() => {
   list.value!.removeEventListener("keyup", keyupEventHandler)
 })
 const handleSelect = (item: Item,index:number) => {
-  
+
   if (ctrlStatus.value) {
     selectItem.push(item.key)
   } else if (shiftStatus.value) {
@@ -71,10 +67,14 @@ const handleSelect = (item: Item,index:number) => {
   <div class="multiple-list" :style="containerStyle" ref="list" tabindex="-1">
     <div
       class="item"
-      v-for="(item,index) in dataSource"
-      @click="handleSelect(item,index)"
+      v-for="(item, index) in dataSource"
+      @click="handleSelect(item, index)"
     >
-      <slot name="item" :isActived="selectItem.includes(item.key)" :itemData="item"></slot>
+      <slot
+        name="item"
+        :isActived="selectItem.includes(item.key)"
+        :itemData="item"
+      ></slot>
     </div>
   </div>
 </template>
