@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { reactive } from "vue"
+import { reactive,CSSProperties } from "vue"
 import MultipleChoice from "./packages/MultipleChoice.vue"
 type Item = {
   name: string
@@ -16,14 +16,16 @@ for (let i = 0; i < 20; i++) {
     key: "fff" + i,
   })
 }
-const containerStyle = {
+const containerStyle:CSSProperties = {
   display:"flex",
   flexWrap:'wrap'
 }
+const defaultKeys = ['fff1']
+const selectKeys = reactive<string[]>([])
 </script>
 
 <template>
-  <MultipleChoice :dataSource="testList" :containerStyle="containerStyle">
+  <MultipleChoice v-model:selectedKeys="selectKeys" :dataSource="testList" :defaultKeys="defaultKeys" :containerStyle="containerStyle">
     <template #item="{ itemData,isActived }">
       <div :class="{actived:isActived}" >
         <span>{{itemData.name}}</span>

@@ -6,8 +6,14 @@ type Item = {
 }
 const props = defineProps({
   dataSource:{type:Array<Item>,default:()=>[]},
-  containerStyle:{type: Object as PropType<CSSProperties>, default:()=>({})}
+  containerStyle:{type: Object as PropType<CSSProperties>, default:()=>({})},
+  defaultKeys:{type:Array<string>,default:()=>[]},
+  selectedKeys:{type:Array<string>,default:()=>[]}
 })
+const emits = defineEmits<{
+  (e:'update:selectedKeys',keys:Array<string>):void
+}>()
+
 const list = ref<HTMLElement | null>(null)
 const selectItem = reactive<string[]>([])
 const ctrlStatus = ref<number>(0)
@@ -33,7 +39,11 @@ onMounted(() => {
   list.value!.addEventListener("keyup", keyupEventHandler)
   list.value!.addEventListener("blur", () => {
     selectItem.length = 0
+    emits('update:selectedKeys',selectItem)
   })
+  if (selectItem.length) selectItem.length = 0
+  selectItem.push(...props.defaultKeys)
+  emits('update:selectedKeys',selectItem)
 })
 onBeforeUnmount(() => {
   list.value!.removeEventListener("keydown", keydownEventHandler)
@@ -60,6 +70,7 @@ const handleSelect = (item: Item,index:number) => {
     selectItem.length = 0
     selectItem.push(item.key)
   }
+  emits('update:selectedKeys',selectItem)
 }
 </script>
 
