@@ -13,11 +13,18 @@ const testList = reactive([])
 const containerStyle = {
   display:"flex"
 }
+const defaultKeys = ["fff1"]
+const selectKeys = reactive([])
 </script>
 
 
 <template>
-  <MultipleChoice :dataSource="testList" :containerStyle="containerStyle">
+  <MultipleChoice 
+    v-model:selectedKeys="selectKeys"
+    :dataSource="testList"
+    :defaultKeys="defaultKeys"
+    :containerStyle="containerStyle"
+  >
     <template #item="{ itemData,isActived }">
       <div :class="{actived:isActived}">
         <!-- slot  -->
@@ -33,7 +40,7 @@ const containerStyle = {
 
 #### api
 
-`dataSource`: your datalist, every item required a unique string `key`, eg:
+`dataSource`: your data list, every item required a unique string `key`, eg:
 
 ```js
 //item 
@@ -43,4 +50,8 @@ const containerStyle = {
 }
 ```
 
-`containerStyle`: containerStyle object.
+`containerStyle`: container style object.
+
+`defaultKeys`: default selected keys.
+
+`selectedKeys`: selected keys.

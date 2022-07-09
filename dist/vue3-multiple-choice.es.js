@@ -1,5 +1,5 @@
 import { defineComponent, ref, reactive, onMounted, onBeforeUnmount, openBlock, createElementBlock, normalizeStyle, Fragment, renderList, renderSlot } from "vue";
-var MultipleChoice_vue_vue_type_style_index_0_scoped_true_lang = /* @__PURE__ */ (() => ".multiple-list[data-v-66fd132a]{outline:0;cursor:pointer}.item[data-v-66fd132a]{user-select:none}\n")();
+var MultipleChoice_vue_vue_type_style_index_0_scoped_true_lang = /* @__PURE__ */ (() => ".multiple-list[data-v-68ad6478]{outline:0;cursor:pointer}.item[data-v-68ad6478]{user-select:none}\n")();
 var _export_sfc = (sfc, props) => {
   const target = sfc.__vccOpts || sfc;
   for (const [key, val] of props) {
@@ -11,10 +11,13 @@ const _hoisted_1 = ["onClick"];
 const _sfc_main = /* @__PURE__ */ defineComponent({
   __name: "MultipleChoice",
   props: {
-    dataSource: { default: () => [] },
-    containerStyle: { default: () => ({}) }
+    dataSource: { type: Array, default: () => [] },
+    containerStyle: { type: Object, default: () => ({}) },
+    defaultKeys: { type: Array, default: () => [] },
+    selectedKeys: { type: Array, default: () => [] }
   },
-  setup(__props) {
+  emits: ["update:selectedKeys"],
+  setup(__props, { emit: emits }) {
     const props = __props;
     const list = ref(null);
     const selectItem = reactive([]);
@@ -41,7 +44,12 @@ const _sfc_main = /* @__PURE__ */ defineComponent({
       list.value.addEventListener("keyup", keyupEventHandler);
       list.value.addEventListener("blur", () => {
         selectItem.length = 0;
+        emits("update:selectedKeys", selectItem);
       });
+      if (selectItem.length)
+        selectItem.length = 0;
+      selectItem.push(...props.defaultKeys);
+      emits("update:selectedKeys", selectItem);
     });
     onBeforeUnmount(() => {
       list.value.removeEventListener("keydown", keydownEventHandler);
@@ -67,6 +75,7 @@ const _sfc_main = /* @__PURE__ */ defineComponent({
         selectItem.length = 0;
         selectItem.push(item.key);
       }
+      emits("update:selectedKeys", selectItem);
     };
     return (_ctx, _cache) => {
       return openBlock(), createElementBlock("div", {
@@ -91,11 +100,11 @@ const _sfc_main = /* @__PURE__ */ defineComponent({
     };
   }
 });
-var MultipleChoice = /* @__PURE__ */ _export_sfc(_sfc_main, [["__scopeId", "data-v-66fd132a"]]);
+var MultipleChoice = /* @__PURE__ */ _export_sfc(_sfc_main, [["__scopeId", "data-v-68ad6478"]]);
 const components = [MultipleChoice];
 const install = function(App, options) {
   components.forEach((component) => {
-    App.component(component.name, component);
+    App.component(component.name = "MultipleChoice", component);
   });
 };
 var index = { install };
