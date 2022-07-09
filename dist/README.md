@@ -4,11 +4,23 @@ choose list items with `ctrl` and `shift`
 
 #### Usage
 
-```vue
-<script setup >
-import { reactive } from "vue"
+```js
+// main.js
+import { createApp } from "vue"
 import {MultipleChoice} from "vue3-multiple-choice"
 import 'vue3-multiple-choice/style.css'
+
+const app = createApp(App)
+app.use(MultipleChoice)
+```
+
+
+
+```vue
+
+// component
+<script setup >
+import { reactive } from "vue"
 const testList = reactive([])
 const containerStyle = {
   display:"flex"
