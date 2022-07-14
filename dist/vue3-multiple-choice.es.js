@@ -1,5 +1,5 @@
 import { defineComponent, ref, reactive, onMounted, onBeforeUnmount, openBlock, createElementBlock, normalizeStyle, Fragment, renderList, renderSlot } from "vue";
-var MultipleChoice_vue_vue_type_style_index_0_scoped_true_lang = /* @__PURE__ */ (() => ".multiple-list[data-v-68ad6478]{outline:0;cursor:pointer}.item[data-v-68ad6478]{user-select:none}\n")();
+var MultipleChoice_vue_vue_type_style_index_0_scoped_true_lang = /* @__PURE__ */ (() => ".multiple-list[data-v-1833533a]{outline:0;cursor:pointer}.item[data-v-1833533a]{user-select:none}\n")();
 var _export_sfc = (sfc, props) => {
   const target = sfc.__vccOpts || sfc;
   for (const [key, val] of props) {
@@ -55,7 +55,8 @@ const _sfc_main = /* @__PURE__ */ defineComponent({
       list.value.removeEventListener("keydown", keydownEventHandler);
       list.value.removeEventListener("keyup", keyupEventHandler);
     });
-    const handleSelect = (item, index2) => {
+    const handleSelect = (item, index2, e) => {
+      e.stopPropagation();
       if (ctrlStatus.value) {
         selectItem.push(item.key);
       } else if (shiftStatus.value) {
@@ -88,10 +89,10 @@ const _sfc_main = /* @__PURE__ */ defineComponent({
         (openBlock(true), createElementBlock(Fragment, null, renderList(__props.dataSource, (item, index2) => {
           return openBlock(), createElementBlock("div", {
             class: "item",
-            onClick: ($event) => handleSelect(item, index2)
+            onClick: ($event) => handleSelect(item, index2, $event)
           }, [
             renderSlot(_ctx.$slots, "item", {
-              isActived: selectItem.includes(item.key),
+              isActived: __props.selectedKeys.includes(item.key),
               itemData: item
             }, void 0, true)
           ], 8, _hoisted_1);
@@ -100,7 +101,7 @@ const _sfc_main = /* @__PURE__ */ defineComponent({
     };
   }
 });
-var MultipleChoice = /* @__PURE__ */ _export_sfc(_sfc_main, [["__scopeId", "data-v-68ad6478"]]);
+var MultipleChoice = /* @__PURE__ */ _export_sfc(_sfc_main, [["__scopeId", "data-v-1833533a"]]);
 const components = [MultipleChoice];
 const install = function(App, options) {
   components.forEach((component) => {
