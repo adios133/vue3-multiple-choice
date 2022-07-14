@@ -49,8 +49,8 @@ onBeforeUnmount(() => {
   list.value!.removeEventListener("keydown", keydownEventHandler)
   list.value!.removeEventListener("keyup", keyupEventHandler)
 })
-const handleSelect = (item: Item,index:number) => {
-
+const handleSelect = (item: Item,index:number,e:MouseEvent) => {
+  e.stopPropagation()
   if (ctrlStatus.value) {
     selectItem.push(item.key)
   } else if (shiftStatus.value) {
@@ -79,11 +79,11 @@ const handleSelect = (item: Item,index:number) => {
     <div
       class="item"
       v-for="(item, index) in dataSource"
-      @click="handleSelect(item, index)"
+      @click="handleSelect(item, index, $event)"
     >
       <slot
         name="item"
-        :isActived="selectItem.includes(item.key)"
+        :isActived="selectedKeys.includes(item.key)"
         :itemData="item"
       ></slot>
     </div>
